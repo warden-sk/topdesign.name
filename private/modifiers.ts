@@ -1,3 +1,7 @@
+/*
+ * Copyright 2022 Marek Kobida
+ */
+
 const modifiers: [number, number][] = [
   [50, 140],
   [100, 125],

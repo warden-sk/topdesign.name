@@ -1,3 +1,7 @@
+/*
+ * Copyright 2022 Marek Kobida
+ */
+
 import './design.css';
 
 import Client from './Client';

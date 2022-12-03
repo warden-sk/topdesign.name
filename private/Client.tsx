@@ -1,3 +1,7 @@
+/*
+ * Copyright 2022 Marek Kobida
+ */
+
 import './Client.css';
 
 import type { Product, ProductOption } from './productStorage';

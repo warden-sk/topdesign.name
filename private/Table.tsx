@@ -1,5 +1,9 @@
+/*
+ * Copyright 2022 Marek Kobida
+ */
+
 import React from 'react';
-import modifiers from "./modifiers";
+import modifiers from './modifiers';
 import productStorage from './productStorage';
 
 function Table() {

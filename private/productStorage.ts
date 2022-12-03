@@ -1,3 +1,7 @@
+/*
+ * Copyright 2022 Marek Kobida
+ */
+
 export interface ProductOption {
   name: string;
   price: number;
