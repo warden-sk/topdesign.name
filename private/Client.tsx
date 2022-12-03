@@ -189,18 +189,18 @@ function Client({ language }: { language: 'en' | 'sk' }) {
 
   return (
     <div className="container" mX="auto" p="4">
-      <div>
+      <div mY="4">
         <a
           display="block"
           href="https://warden-sk.github.io/topdesign.name/public/index.html?key=b81a3b0b-d232-40ad-8ab3-c65a1ff945db&language=en"
         >
-          en
+          English language
         </a>
         <a
           display="block"
           href="https://warden-sk.github.io/topdesign.name/public/index.html?key=b81a3b0b-d232-40ad-8ab3-c65a1ff945db&language=sk"
         >
-          sk
+          Slovenský jazyk
         </a>
       </div>
 
