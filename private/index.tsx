@@ -4,12 +4,16 @@ import Client from './Client';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
+const key = 'b81a3b0b-d232-40ad-8ab3-c65a1ff945db';
+
 if (typeof window !== 'undefined') {
-  if (new URL(window.location.toString()).searchParams.has('key')) {
-    localStorage.setItem('key', 'b81a3b0b-d232-40ad-8ab3-c65a1ff945db');
+  // (1)
+  if (key === new URL(window.location.toString()).searchParams.get('key')) {
+    localStorage.setItem('key', key);
   }
 
-  if (localStorage.getItem('key') === 'b81a3b0b-d232-40ad-8ab3-c65a1ff945db') {
+  // (2)
+  if (key === localStorage.getItem('key')) {
     createRoot(document.getElementById('client')!).render(<Client />);
   }
 }

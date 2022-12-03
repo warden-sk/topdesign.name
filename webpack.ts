@@ -9,7 +9,7 @@ import webpack from 'webpack';
 const compiler = webpack(
   common({
     htmlTemplate: compileReact,
-    name: 'Test',
+    name: 'Výroba reklamných sedákov - TOPdesign Topoľčany s.r.o.',
     publicPath: process.env.NODE_ENV === 'production' && 'https://warden-sk.github.io/topdesign.name/public',
   })
 );

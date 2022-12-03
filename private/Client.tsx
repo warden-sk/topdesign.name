@@ -27,7 +27,7 @@ function findRight(price: number, sumAc: number, totalks: number, ks: number): n
   return 0;
 }
 
-function Kktko({
+function Tstik({
   id,
   totalks,
   onDelete,
@@ -187,7 +187,7 @@ function Client() {
 
       <div display="grid" gridTemplateColumns={['1', { '##': '2', '###': '3', '####': '4' }]} gap="4">
         {[...products].map(([i]) => (
-          <Kktko
+          <Tstik
             id={i}
             onDelete={() => {
               deleteProduct(i);
