@@ -46,6 +46,7 @@ textarea {
   border-radius: var(--border-radius);
 }
 .product__name {
+  border: var(--border-width) solid transparent;
   border-radius: var(--border-radius);
 }
 .product__name:hover {
@@ -53,6 +54,7 @@ textarea {
 }
 .product__name_active {
   background-color: hsl(0, 0%, 30%);
+  border-color: hsl(0, 0%, 40%);
   color: hsl(0, 0%, 100%);
 }
 /**/

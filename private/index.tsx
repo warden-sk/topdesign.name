@@ -11,14 +11,18 @@ import { createRoot } from 'react-dom/client';
 const key = 'b81a3b0b-d232-40ad-8ab3-c65a1ff945db';
 
 if (typeof window !== 'undefined') {
+  const url = new window.URL(window.location.toString());
+
   // (1)
-  if (key === new URL(window.location.toString()).searchParams.get('key')) {
-    localStorage.setItem('key', key);
+  if (key === url.searchParams.get('key')) {
+    window.localStorage.setItem('key', key);
   }
 
   // (2)
-  if (key === localStorage.getItem('key')) {
-    createRoot(document.getElementById('client')!).render(<Client />);
+  if (key === window.localStorage.getItem('key')) {
+    createRoot(window.document.getElementById('client')!).render(
+      <Client language={(url.searchParams.get('language') as 'sk') ?? 'sk'} />
+    );
   }
 }
 

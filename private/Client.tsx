@@ -7,8 +7,10 @@ import './Client.css';
 import type { Product, ProductOption } from './productStorage';
 import React from 'react';
 import Table from './Table';
-import plural from './plural';
+import gt from './messages';
 import productStorage from './productStorage';
+
+let messages = gt('sk');
 
 function findRight(product: Product, sumAc: number, totalks: number, ks: number): number {
   const i = product.modifiers.findIndex(($$, j) => {
@@ -24,7 +26,7 @@ function findRight(product: Product, sumAc: number, totalks: number, ks: number)
 
     const cenaZaKus = (percentage / 100) * product.price + sumAc;
 
-    return +(cenaZaKus * ks).toFixed(2);
+    return +(cenaZaKus * ks);
   }
 
   return 0;
@@ -74,7 +76,7 @@ function Tstik({
   return (
     <div className="product" p="4">
       <div className="line-after" fontWeight="600">
-        <div>Produkt</div>
+        <div>{messages('PRODUCT')}</div>
       </div>
 
       <img display="block" mX="auto" mY="4" src={productImg} width="9/12" />
@@ -88,10 +90,10 @@ function Tstik({
             p="2"
           >
             {product.options.length > 0 ? (
-              <div display="flex" justifyContent="space-between">
+              <div alignItems="center" display="flex" justifyContent="space-between">
                 <div>{product.name}</div>
-                <div className="opacity-50">
-                  {plural(product.options.length, ['možnosť', 'možnosti', 'možností'])} na výber
+                <div className="opacity-50" fontSize="2">
+                  {messages('NUMBER_OF_OPTIONS_TO_SELECT', [product.options.length])}
                 </div>
               </div>
             ) : (
@@ -104,7 +106,7 @@ function Tstik({
       {currentProduct.options.length > 0 && (
         <>
           <div className="line-after" fontWeight="600">
-            <div>Možnosti</div>
+            <div>{messages('OPTIONS')}</div>
           </div>
           <div mY="4">
             {currentProduct.options.map(option => {
@@ -128,7 +130,7 @@ function Tstik({
                   p="2"
                 >
                   <div>{option.name}</div>
-                  <div className="opacity-50">{option.price} € bez DPH</div>
+                  <div className="opacity-50">{messages('PRICE_WITHOUT_VAT', [option.price])}</div>
                 </div>
               );
             })}
@@ -138,7 +140,7 @@ function Tstik({
 
       <div mY="4" spaceY="4">
         <label className="line-after" cursor="pointer" fontWeight="600" htmlFor={`ks-${id}`}>
-          <div>Počet kusov</div>
+          <div>{messages('NUMBER_OF_PIECES')}</div>
         </label>
         <input id={`ks-${id}`} onChange={e => on(+e.currentTarget.value)} p="2" type="text" value={ks} width="100" />
       </div>
@@ -146,23 +148,26 @@ function Tstik({
         <div
           className="deleteProductButton opacity-50"
           cursor="pointer"
+          fontSize="2"
           onClick={() => onDelete()}
-          whiteSpace="pre-line"
-        >{`Odstrániť produkt\nz objednávky`}</div>
-        <div textAlign="right">
-          <div fontWeight="600">{findRight(currentProduct, sumAc, totalks, ks)} € bez DPH</div>
-          <div className="opacity-50" fontSize="2" whiteSpace="pre-line">{`cena od ${plural(totalks, [
-            'kusu',
-            'kusov',
-            'kusov',
-          ])}\nz celkovej objednávky`}</div>
+          width="6/12"
+        >
+          {messages('DELETE_PRODUCT_FROM_ORDER')}
+        </div>
+        <div textAlign="right" width="6/12">
+          <div fontWeight="600">{messages('PRICE_WITHOUT_VAT', [findRight(currentProduct, sumAc, totalks, ks)])}</div>
+          <div className="opacity-50" fontSize="2">
+            {messages('PRICE_FROM_PIECES', [totalks])}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function Client() {
+function Client({ language }: { language: 'en' | 'sk' }) {
+  messages = gt(language);
+
   const [products, updateProducts] = React.useState<[string, number, number][]>([]);
 
   const sumPrice: number = [...products].reduce((partialSum, a) => partialSum + a[1], 0);
@@ -184,8 +189,23 @@ function Client() {
 
   return (
     <div className="container" mX="auto" p="4">
+      <div>
+        <a
+          display="block"
+          href="https://warden-sk.github.io/topdesign.name/public/index.html?key=b81a3b0b-d232-40ad-8ab3-c65a1ff945db&language=en"
+        >
+          en
+        </a>
+        <a
+          display="block"
+          href="https://warden-sk.github.io/topdesign.name/public/index.html?key=b81a3b0b-d232-40ad-8ab3-c65a1ff945db&language=sk"
+        >
+          sk
+        </a>
+      </div>
+
       <div fontSize="8" mY="4">
-        Objednávka
+        {messages('ORDER')}
       </div>
 
       <div display="grid" gridTemplateColumns={['1', { '##': '2', '###': '3' }]} gap="4">
@@ -217,21 +237,20 @@ function Client() {
           justifyContent="center"
           onClick={() => addProduct()}
           textAlign="center"
-          whiteSpace="pre-line"
         >
-          {`Pridať produkt\ndo objednávky`}
+          {messages('ADD_PRODUCT_TO_ORDER')}
         </div>
       </div>
 
       <div className="order__price" fontSize="4" fontWeight="600" mY="4" p="2" textAlign="center">
-        {sumPrice.toFixed(2)} € bez DPH za {plural(sumKs, ['kus', 'kusy', 'kusov'])}
+        {messages('PRICE_WITHOUT_VAT_FOR_PIECES', [sumPrice, sumKs])}
       </div>
 
       <div fontSize="8" mY="4">
-        Tabuľka
+        {messages('TABLE')}
       </div>
 
-      <div style={{ overflowX: 'auto' }} whiteSpace="pre">
+      <div style={{ overflowX: 'auto' }} whiteSpace="nowrap">
         <Table />
       </div>
     </div>

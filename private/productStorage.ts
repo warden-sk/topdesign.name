@@ -2,8 +2,6 @@
  * Copyright 2022 Marek Kobida
  */
 
-import modifiers from './modifiers';
-
 export interface ProductOption {
   name: string;
   price: number;
@@ -16,21 +14,37 @@ export interface Product {
   price: number;
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+
+const firstCategoryModifiers: [number, number][] = [
+  [50, 140],
+  [100, 125],
+  [200, 118],
+  [300, 115],
+  [400, 112],
+  [500, 110],
+  [600, 108],
+  [700, 106],
+  [800, 104],
+  [900, 102],
+  [1000, 100],
+];
+
 const productStorage: Product[] = [
   {
-    modifiers,
+    modifiers: firstCategoryModifiers,
     name: 'FAN Classic',
     options: [],
     price: 2.8,
   },
   {
-    modifiers,
+    modifiers: firstCategoryModifiers,
     name: 'FAN Smart',
     options: [],
     price: 2.95,
   },
   {
-    modifiers,
+    modifiers: firstCategoryModifiers,
     name: 'FAN Premium',
     options: [
       {

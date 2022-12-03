@@ -19,7 +19,7 @@ function Table() {
                 <td>
                   <table width="100">
                     <tr>
-                      <td p="2">{l} ks</td>
+                      <td p="2">{l}</td>
                     </tr>
                     <tr>
                       <td p="2">{r - 100} %</td>
