@@ -185,7 +185,7 @@ function Client() {
         Objednávka
       </div>
 
-      <div display="grid" gridTemplateColumns="3" gap="4">
+      <div display="grid" gridTemplateColumns={['1', { '##': '2', '###': '3', '####': '4' }]} gap="4">
         {[...products].map(([i]) => (
           <Kktko
             id={i}
@@ -228,7 +228,9 @@ function Client() {
         Tabuľka
       </div>
 
-      <Table />
+      <div style={{ overflowX: 'auto' }} whiteSpace="pre">
+        <Table />
+      </div>
     </div>
   );
 }
