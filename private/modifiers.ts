@@ -10,7 +10,6 @@ const modifiers: [number, number][] = [
   [800, 104],
   [900, 102],
   [1000, 100],
-  [2000, 98],
 ];
 
 export default modifiers;

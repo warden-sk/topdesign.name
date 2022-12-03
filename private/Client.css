@@ -1,14 +1,14 @@
 :root {
-  --border-radius: calc(var(--border-width) * 2);
+  --border-radius: calc(var(--border-width) * 4);
 }
 body {
-  background-color: hsl(0, 0%, 20%);
-  color: hsl(0, 0%, 80%);
+  background-color: hsl(0, 0%, 10%);
+  color: hsl(0, 0%, 90%);
 }
 input,
 textarea {
   background-color: hsl(0, 0%, 30%);
-  border: inherit;
+  border: var(--border-width) solid hsl(0, 0%, 40%);
   border-radius: var(--border-radius);
   color: hsl(0, 0%, 100%);
   font-family: inherit;
@@ -24,23 +24,25 @@ textarea:focus {
 table {
   border-collapse: collapse;
 }
-table td {
-  border: var(--border-width) solid hsl(0, 0%, 50%);
+table table td {
+  background-color: hsl(0, 0%, 15%);
 }
 textarea {
   resize: none;
 }
 /**/
-.addProductButton,
-.deleteProductButton {
-  opacity: 0.5;
-}
 .addProductButton:hover,
 .deleteProductButton:hover {
   text-decoration: underline;
 }
+.order__price {
+  background-color: hsl(0, 0%, 20%);
+  border: var(--border-width) solid hsl(0, 0%, 40%);
+  border-radius: var(--border-radius);
+}
 .product {
-  background-color: hsl(0, 0%, 10%);
+  background-color: hsl(0, 0%, 20%);
+  border: var(--border-width) solid hsl(0, 0%, 40%);
   border-radius: var(--border-radius);
 }
 .product__name {
@@ -57,15 +59,14 @@ textarea {
 .line-after {
   align-items: center;
   display: flex;
-  white-space: nowrap;
 }
 .line-after::after {
-  border-top: var(--border-width) solid hsl(0, 0%, 100%); /* 1px */
+  border-top: var(--border-width) solid hsl(0, 0%, 30%); /* 1px */
   content: "";
   flex: 1;
   margin-left: 1rem; /* 8px */
-  opacity: 0.25;
 }
-.line-after > div {
-  white-space: pre-line;
+/**/
+.opacity-50 {
+  opacity: 0.5;
 }
