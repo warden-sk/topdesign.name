@@ -188,7 +188,7 @@ function Client() {
         Objednávka
       </div>
 
-      <div display="grid" gridTemplateColumns={['1', { '##': '2', '###': '3', '####': '4' }]} gap="4">
+      <div display="grid" gridTemplateColumns={['1', { '##': '2', '###': '3' }]} gap="4">
         {[...products].map(([i]) => (
           <Tstik
             id={i}
