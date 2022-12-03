@@ -164,8 +164,7 @@ function Client() {
     <div className="container" mX="auto" p="4">
       <div fontSize="8" mY="4">
         Objednávka
-
-
+      </div>
 
       <div display="grid" gridTemplateColumns="3" gap="4">
         {[...products].map(i => (
