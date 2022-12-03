@@ -1,0 +1,71 @@
+:root {
+  --border-radius: calc(var(--border-width) * 2);
+}
+body {
+  background-color: hsl(0, 0%, 20%);
+  color: hsl(0, 0%, 80%);
+}
+input,
+textarea {
+  background-color: hsl(0, 0%, 30%);
+  border: inherit;
+  border-radius: var(--border-radius);
+  color: hsl(0, 0%, 100%);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+input:focus,
+textarea:focus {
+  outline: 0;
+}
+table {
+  border-collapse: collapse;
+}
+table td {
+  border: var(--border-width) solid hsl(0, 0%, 50%);
+}
+textarea {
+  resize: none;
+}
+/**/
+.addProductButton,
+.deleteProductButton {
+  opacity: 0.5;
+}
+.addProductButton:hover,
+.deleteProductButton:hover {
+  text-decoration: underline;
+}
+.product {
+  background-color: hsl(0, 0%, 10%);
+  border-radius: var(--border-radius);
+}
+.product__name {
+  border-radius: var(--border-radius);
+}
+.product__name:hover {
+  text-decoration: underline;
+}
+.product__name_active {
+  background-color: hsl(0, 0%, 30%);
+  color: hsl(0, 0%, 100%);
+}
+/**/
+.line-after {
+  align-items: center;
+  display: flex;
+  white-space: nowrap;
+}
+.line-after::after {
+  border-top: var(--border-width) solid hsl(0, 0%, 100%); /* 1px */
+  content: "";
+  flex: 1;
+  margin-left: 1rem; /* 8px */
+  opacity: 0.25;
+}
+.line-after > div {
+  white-space: pre-line;
+}

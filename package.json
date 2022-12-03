@@ -1,0 +1,25 @@
+{
+  "devDependencies": {
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@types/babel__core": "^7.1.20",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "@types/warden-sk__design": "file:../types-design",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@warden-sk/babel-plugin": "file:../design/packages/babel-plugin",
+    "@warden-sk/design": "file:../design/packages/design",
+    "@warden-sk/eslint-config": "file:../eslint-config",
+    "@warden-sk/helpers": "file:../helpers",
+    "eslint": "^8.28.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.9.3",
+    "webpack": "^5.75.0"
+  },
+  "name": "@warden-sk/topdesign.name",
+  "version": "1.0.0"
+}
