@@ -10,6 +10,7 @@ const compiler = webpack(
   common({
     htmlTemplate: compileReact,
     name: 'Test',
+    publicPath: process.env.NODE_ENV === 'production' && 'https://warden-sk.github.io/topdesign.name/public',
   })
 );
 

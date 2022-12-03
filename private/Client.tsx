@@ -61,11 +61,21 @@ function Kktko({
     on(ks);
   }, [accessories.size, totalks]);
 
+  const productImg =
+    currentProduct.name === 'FAN Classic'
+      ? 'http://topdesign.name/public/2__0__0.png'
+      : currentProduct.name === 'FAN Smart'
+      ? 'http://topdesign.name/public/2__1__0.png'
+      : 'http://topdesign.name/public/2__2__0.png';
+
   return (
     <div className="product" p="4">
       <div className="line-after" fontWeight="600">
         <div>Produkt</div>
       </div>
+
+      <img display="block" mX="auto" mY="4" src={productImg} width="9/12" />
+
       <div mY="4">
         {productStorage.map(product => (
           <div
