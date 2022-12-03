@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import modifiers from './modifiers';
 import productStorage from './productStorage';
 
 function Table() {
@@ -15,7 +14,7 @@ function Table() {
             <td fontWeight="600" p="2">
               {product.name}
             </td>
-            {modifiers.map(([l, r]) => {
+            {product.modifiers.map(([l, r]) => {
               return (
                 <td>
                   <table width="100">

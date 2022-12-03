@@ -7,23 +7,22 @@ import './Client.css';
 import type { Product, ProductOption } from './productStorage';
 import React from 'react';
 import Table from './Table';
-import modifiers from './modifiers';
 import plural from './plural';
 import productStorage from './productStorage';
 
-function findRight(price: number, sumAc: number, totalks: number, ks: number): number {
-  const i = modifiers.findIndex(($$, j) => {
+function findRight(product: Product, sumAc: number, totalks: number, ks: number): number {
+  const i = product.modifiers.findIndex(($$, j) => {
     const l = $$[0];
 
-    const r = modifiers?.[j + 1]?.[0] ?? Number.MAX_SAFE_INTEGER;
+    const r = product.modifiers?.[j + 1]?.[0] ?? Number.MAX_SAFE_INTEGER;
 
     return totalks >= l && totalks < r;
   });
 
   if (i !== -1) {
-    const percentage = modifiers[i][1];
+    const percentage = product.modifiers[i][1];
 
-    const cenaZaKus = (percentage / 100) * price + sumAc;
+    const cenaZaKus = (percentage / 100) * product.price + sumAc;
 
     return +(cenaZaKus * ks).toFixed(2);
   }
@@ -52,7 +51,7 @@ function Tstik({
   function on(ks: number) {
     updateKs(ks);
 
-    onPrice([findRight(currentProduct.price, sumAc, totalks, ks), ks]);
+    onPrice([findRight(currentProduct, sumAc, totalks, ks), ks]);
   }
 
   React.useEffect(() => {
@@ -151,7 +150,7 @@ function Tstik({
           whiteSpace="pre-line"
         >{`Odstrániť produkt\nz objednávky`}</div>
         <div textAlign="right">
-          <div fontWeight="600">{findRight(currentProduct.price, sumAc, totalks, ks)} € bez DPH</div>
+          <div fontWeight="600">{findRight(currentProduct, sumAc, totalks, ks)} € bez DPH</div>
           <div className="opacity-50" fontSize="2" whiteSpace="pre-line">{`cena od ${plural(totalks, [
             'kusu',
             'kusov',
