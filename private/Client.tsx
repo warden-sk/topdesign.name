@@ -143,7 +143,7 @@ function Tstik({
 
       <div mY="4" spaceY="4">
         <label className="line-after" cursor="pointer" fontWeight="600" htmlFor={`ks-${id}`}>
-          <div>{readMessage?.('NUMBER_OF_PIECES')}</div>
+          <div>{readMessage?.('NUMBER_OF_PIECES', [])}</div>
         </label>
         <input id={`ks-${id}`} onChange={e => on(+e.currentTarget.value)} p="2" type="text" value={ks} width="100" />
       </div>
@@ -205,8 +205,8 @@ function Client() {
           </a>
         </div>
 
-        <div fontSize="8" mY="4">
-          {readMessage?.('ORDER')}
+        <div className="line-after" fontSize="8" mY="4">
+          <div>{readMessage?.('ORDER')}</div>
         </div>
 
         <div display="grid" gridTemplateColumns={['1', { '##': '2', '###': '3' }]} gap="4">
@@ -243,12 +243,14 @@ function Client() {
           </div>
         </div>
 
-        <div className="order__price" fontSize="4" fontWeight="600" mY="4" p="2" textAlign="center">
-          {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', [sumPrice, sumKs])}
-        </div>
+        {sumPrice > 0 && (
+          <div className="order__price" fontSize="4" fontWeight="600" mY="4" p="2" textAlign="center">
+            {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', [sumPrice, sumKs])}
+          </div>
+        )}
 
-        <div fontSize="8" mY="4">
-          {readMessage?.('TABLE')}
+        <div className="line-after" fontSize="8" mY="4">
+          <div>{readMessage?.('TABLE')}</div>
         </div>
 
         <div style={{ overflowX: 'auto' }} whiteSpace="nowrap">

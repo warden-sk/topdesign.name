@@ -3,9 +3,12 @@
  */
 
 import React from 'react';
+import context from './context';
 import productStorage from './productStorage';
 
 function Table() {
+  const { readMessage } = React.useContext(context);
+
   return (
     <table textAlign="right" width="100">
       {productStorage.map(product => {
@@ -16,13 +19,13 @@ function Table() {
             </td>
             {product.modifiers.map(([l, r]) => {
               return (
-                <td>
+                <td p="1">
                   <table width="100">
                     <tr>
-                      <td p="2">{l}</td>
+                      <td p="2">{r - 100} %</td>
                     </tr>
                     <tr>
-                      <td p="2">{r - 100} %</td>
+                      <td p="2">{readMessage?.('NUMBER_OF_PIECES', [l])}</td>
                     </tr>
                     <tr>
                       <td fontWeight="600" p="2">

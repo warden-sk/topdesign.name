@@ -8,7 +8,7 @@ export interface Messages {
   ADD_PRODUCT_TO_ORDER: string;
   DELETE_PRODUCT_FROM_ORDER: string;
   NUMBER_OF_OPTIONS_TO_SELECT: (numberOfOptions: number) => string;
-  NUMBER_OF_PIECES: string;
+  NUMBER_OF_PIECES: (pieces?: number) => string;
   OPTIONS: string;
   ORDER: string;
   PRICE_FROM_PIECES: (pieces: number) => string;
@@ -24,7 +24,7 @@ const en: Messages = {
   DELETE_PRODUCT_FROM_ORDER: 'Delete product from\u00A0order',
   NUMBER_OF_OPTIONS_TO_SELECT: numberOfOptions =>
     `${plural(numberOfOptions, ['option', 'options', 'options'])} to select`,
-  NUMBER_OF_PIECES: 'Number of pieces',
+  NUMBER_OF_PIECES: pieces => (pieces ? `${plural(pieces, ['piece', 'pieces', 'pieces'])}` : 'Number of pieces'),
   OPTIONS: 'Options',
   ORDER: 'Order',
   PRICE_FROM_PIECES: pieces => `price from ${plural(pieces, ['piece', 'pieces', 'pieces'])}`,
@@ -41,7 +41,7 @@ const sk: Messages = {
   DELETE_PRODUCT_FROM_ORDER: 'Odstrániť produkt z\u00A0objednávky',
   NUMBER_OF_OPTIONS_TO_SELECT: numberOfOptions =>
     `${plural(numberOfOptions, ['možnosť', 'možnosti', 'možností'])} na výber`,
-  NUMBER_OF_PIECES: 'Počet kusov',
+  NUMBER_OF_PIECES: pieces => (pieces ? `${plural(pieces, ['kus', 'kusy', 'kusov'])}` : 'Počet kusov'),
   OPTIONS: 'Možnosti',
   ORDER: 'Objednávka',
   PRICE_FROM_PIECES: pieces => `cena od ${plural(pieces, ['kusu', 'kusov', 'kusov'])}`,
