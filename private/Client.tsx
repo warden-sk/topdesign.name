@@ -7,10 +7,9 @@ import './Client.css';
 import type { Product, ProductOption } from './productStorage';
 import React from 'react';
 import Table from './Table';
-import gt from './messages';
+import context from './context';
+import getMessage from './messages';
 import productStorage from './productStorage';
-
-let messages = gt('sk');
 
 function findRight(product: Product, sumAc: number, totalks: number, ks: number): number {
   const i = product.modifiers.findIndex(($$, j) => {
@@ -43,6 +42,8 @@ function Tstik({
   onDelete: () => void;
   onPrice: (price: [number, number]) => void;
 }) {
+  const { readMessage } = React.useContext(context);
+
   const [currentProduct, updateCurrentProduct] = React.useState<Product>(productStorage[0]);
   const [ks, updateKs] = React.useState<number>(50);
 
@@ -76,7 +77,7 @@ function Tstik({
   return (
     <div className="product" p="4">
       <div className="line-after" fontWeight="600">
-        <div>{messages('PRODUCT')}</div>
+        <div>{readMessage?.('PRODUCT')}</div>
       </div>
 
       <img display="block" mX="auto" mY="4" src={productImg} width="9/12" />
@@ -93,7 +94,7 @@ function Tstik({
               <div alignItems="center" display="flex" justifyContent="space-between">
                 <div>{product.name}</div>
                 <div className="opacity-50" fontSize="2">
-                  {messages('NUMBER_OF_OPTIONS_TO_SELECT', [product.options.length])}
+                  {readMessage?.('NUMBER_OF_OPTIONS_TO_SELECT', [product.options.length])}
                 </div>
               </div>
             ) : (
@@ -106,7 +107,7 @@ function Tstik({
       {currentProduct.options.length > 0 && (
         <>
           <div className="line-after" fontWeight="600">
-            <div>{messages('OPTIONS')}</div>
+            <div>{readMessage?.('OPTIONS')}</div>
           </div>
           <div mY="4">
             {currentProduct.options.map(option => {
@@ -130,7 +131,9 @@ function Tstik({
                   p="2"
                 >
                   <div>{option.name}</div>
-                  <div className="opacity-50">{messages('PRICE_WITHOUT_VAT', [option.price])}</div>
+                  <div className="opacity-50" fontSize="2">
+                    {readMessage?.('PRICE_WITHOUT_VAT', [option.price])}
+                  </div>
                 </div>
               );
             })}
@@ -140,7 +143,7 @@ function Tstik({
 
       <div mY="4" spaceY="4">
         <label className="line-after" cursor="pointer" fontWeight="600" htmlFor={`ks-${id}`}>
-          <div>{messages('NUMBER_OF_PIECES')}</div>
+          <div>{readMessage?.('NUMBER_OF_PIECES')}</div>
         </label>
         <input id={`ks-${id}`} onChange={e => on(+e.currentTarget.value)} p="2" type="text" value={ks} width="100" />
       </div>
@@ -152,12 +155,14 @@ function Tstik({
           onClick={() => onDelete()}
           width="6/12"
         >
-          {messages('DELETE_PRODUCT_FROM_ORDER')}
+          {readMessage?.('DELETE_PRODUCT_FROM_ORDER')}
         </div>
         <div textAlign="right" width="6/12">
-          <div fontWeight="600">{messages('PRICE_WITHOUT_VAT', [findRight(currentProduct, sumAc, totalks, ks)])}</div>
+          <div fontWeight="600">
+            {readMessage?.('PRICE_WITHOUT_VAT', [findRight(currentProduct, sumAc, totalks, ks)])}
+          </div>
           <div className="opacity-50" fontSize="2">
-            {messages('PRICE_FROM_PIECES', [totalks])}
+            {readMessage?.('PRICE_FROM_PIECES', [totalks])}
           </div>
         </div>
       </div>
@@ -165,9 +170,8 @@ function Tstik({
   );
 }
 
-function Client({ language }: { language: 'en' | 'sk' }) {
-  messages = gt(language);
-
+function Client() {
+  const [language, updateLanguage] = React.useState<'en' | 'sk'>('sk');
   const [products, updateProducts] = React.useState<[string, number, number][]>([]);
 
   const sumPrice: number = [...products].reduce((partialSum, a) => partialSum + a[1], 0);
@@ -187,73 +191,71 @@ function Client({ language }: { language: 'en' | 'sk' }) {
     });
   }
 
+  const readMessage = getMessage(language);
+
   return (
-    <div className="container" mX="auto" p="4">
-      <div mY="4">
-        <a
-          display="block"
-          href="https://warden-sk.github.io/topdesign.name/public/index.html?key=b81a3b0b-d232-40ad-8ab3-c65a1ff945db&language=en"
-        >
-          English language
-        </a>
-        <a
-          display="block"
-          href="https://warden-sk.github.io/topdesign.name/public/index.html?key=b81a3b0b-d232-40ad-8ab3-c65a1ff945db&language=sk"
-        >
-          Slovenský jazyk
-        </a>
-      </div>
+    <context.Provider value={{ language, readMessage, updateLanguage }}>
+      <div className="container" mX="auto" p="4">
+        <div mY="4">
+          <a display="block" href="#" onClick={() => updateLanguage('en')}>
+            English language
+          </a>
+          <a display="block" href="#" onClick={() => updateLanguage('sk')}>
+            Slovenský jazyk
+          </a>
+        </div>
 
-      <div fontSize="8" mY="4">
-        {messages('ORDER')}
-      </div>
+        <div fontSize="8" mY="4">
+          {readMessage?.('ORDER')}
+        </div>
 
-      <div display="grid" gridTemplateColumns={['1', { '##': '2', '###': '3' }]} gap="4">
-        {[...products].map(([i]) => (
-          <Tstik
-            id={i}
-            onDelete={() => {
-              deleteProduct(i);
-            }}
-            onPrice={price => {
-              updateProducts(products => {
-                return products.map(product => {
-                  if (product[0] === i) {
-                    return [i, ...price];
-                  }
+        <div display="grid" gridTemplateColumns={['1', { '##': '2', '###': '3' }]} gap="4">
+          {[...products].map(([i]) => (
+            <Tstik
+              id={i}
+              onDelete={() => {
+                deleteProduct(i);
+              }}
+              onPrice={price => {
+                updateProducts(products => {
+                  return products.map(product => {
+                    if (product[0] === i) {
+                      return [i, ...price];
+                    }
 
-                  return product;
+                    return product;
+                  });
                 });
-              });
-            }}
-            totalks={sumKs}
-          />
-        ))}
-        <div
-          alignItems="center"
-          className="addProductButton"
-          cursor="pointer"
-          display="flex"
-          justifyContent="center"
-          onClick={() => addProduct()}
-          textAlign="center"
-        >
-          {messages('ADD_PRODUCT_TO_ORDER')}
+              }}
+              totalks={sumKs}
+            />
+          ))}
+          <div
+            alignItems="center"
+            className="addProductButton"
+            cursor="pointer"
+            display="flex"
+            justifyContent="center"
+            onClick={() => addProduct()}
+            textAlign="center"
+          >
+            {readMessage?.('ADD_PRODUCT_TO_ORDER')}
+          </div>
+        </div>
+
+        <div className="order__price" fontSize="4" fontWeight="600" mY="4" p="2" textAlign="center">
+          {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', [sumPrice, sumKs])}
+        </div>
+
+        <div fontSize="8" mY="4">
+          {readMessage?.('TABLE')}
+        </div>
+
+        <div style={{ overflowX: 'auto' }} whiteSpace="nowrap">
+          <Table />
         </div>
       </div>
-
-      <div className="order__price" fontSize="4" fontWeight="600" mY="4" p="2" textAlign="center">
-        {messages('PRICE_WITHOUT_VAT_FOR_PIECES', [sumPrice, sumKs])}
-      </div>
-
-      <div fontSize="8" mY="4">
-        {messages('TABLE')}
-      </div>
-
-      <div style={{ overflowX: 'auto' }} whiteSpace="nowrap">
-        <Table />
-      </div>
-    </div>
+    </context.Provider>
   );
 }
 

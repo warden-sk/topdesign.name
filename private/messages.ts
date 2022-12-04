@@ -4,7 +4,7 @@
 
 import plural from './plural';
 
-interface T {
+export interface Messages {
   ADD_PRODUCT_TO_ORDER: string;
   DELETE_PRODUCT_FROM_ORDER: string;
   NUMBER_OF_OPTIONS_TO_SELECT: (numberOfOptions: number) => string;
@@ -19,7 +19,7 @@ interface T {
   WITHOUT_VAT: string;
 }
 
-const en: T = {
+const en: Messages = {
   ADD_PRODUCT_TO_ORDER: 'Add product to\u00A0order',
   DELETE_PRODUCT_FROM_ORDER: 'Delete product from\u00A0order',
   NUMBER_OF_OPTIONS_TO_SELECT: numberOfOptions =>
@@ -36,7 +36,7 @@ const en: T = {
   WITHOUT_VAT: 'without VAT',
 };
 
-const sk: T = {
+const sk: Messages = {
   ADD_PRODUCT_TO_ORDER: 'Pridať produkt do\u00A0objednávky',
   DELETE_PRODUCT_FROM_ORDER: 'Odstrániť produkt z\u00A0objednávky',
   NUMBER_OF_OPTIONS_TO_SELECT: numberOfOptions =>
@@ -53,12 +53,12 @@ const sk: T = {
   WITHOUT_VAT: 'bez DPH',
 };
 
-type L<TT> = TT extends (...args: infer P) => any ? P : never;
+export type L<TT> = TT extends (...args: infer P) => any ? P : never;
 
 const languages = { en, sk };
 
 function getMessage(language: keyof typeof languages) {
-  return function messages<K extends keyof T>(key: K, args?: L<T[K]>) {
+  return <K extends keyof Messages>(key: K, args?: L<Messages[K]>) => {
     const $ = languages[language][key];
 
     if (typeof $ === 'string') {

@@ -20,9 +20,7 @@ if (typeof window !== 'undefined') {
 
   // (2)
   if (key === window.localStorage.getItem('key')) {
-    createRoot(window.document.getElementById('client')!).render(
-      <Client language={(url.searchParams.get('language') as 'sk') ?? 'sk'} />
-    );
+    createRoot(window.document.getElementById('client')!).render(<Client />);
   }
 }
 
