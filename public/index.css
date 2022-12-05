@@ -31,6 +31,10 @@ textarea {
   resize: none;
 }
 /**/
+.addProductButton {
+  border: var(--border-width) solid hsl(0, 0%, 40%);
+  border-radius: var(--border-radius);
+}
 .addProductButton:hover,
 .deleteProductButton:hover {
   text-decoration: underline;
@@ -44,6 +48,11 @@ textarea {
   background-color: hsl(0, 0%, 20%);
   border: var(--border-width) solid hsl(0, 0%, 40%);
   border-radius: var(--border-radius);
+}
+.product__photo {
+  background-image: linear-gradient(45deg, hsl(0, 0%, 0%), hsl(0, 0%, 50%));
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 .product__name {
   border: var(--border-width) solid transparent;

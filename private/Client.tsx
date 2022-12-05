@@ -69,10 +69,20 @@ function Tstik({
 
   const productImg =
     currentProduct.name === 'FAN Classic'
-      ? 'http://topdesign.name/public/2__0__0.png'
+      ? 'Sedák FAN Classic maska 390x305.png'
       : currentProduct.name === 'FAN Smart'
-      ? 'http://topdesign.name/public/2__1__0.png'
-      : 'http://topdesign.name/public/2__2__0.png';
+      ? 'Sedák FAN Smart maska 390x305mm.png'
+      : 'Sedák FAN Premium maska 390x305mm.png';
+
+  const productPhotoElement = React.useRef<HTMLImageElement>(null);
+
+  function handleFile(file: File) {
+    if (/^image\//.test(file.type)) {
+      const urlFromFile = URL.createObjectURL(file);
+
+      productPhotoElement.current && (productPhotoElement.current.style.backgroundImage = `url(${urlFromFile})`);
+    }
+  }
 
   return (
     <div className="product" p="4">
@@ -80,7 +90,48 @@ function Tstik({
         <div>{readMessage?.('PRODUCT')}</div>
       </div>
 
-      <img display="block" mX="auto" mY="4" src={productImg} width="9/12" />
+      <img
+        className="product__photo"
+        display="block"
+        mX="auto"
+        mY="4"
+        onDragLeave={e => {
+          e.preventDefault();
+        }}
+        onDragOver={e => {
+          e.preventDefault();
+        }}
+        onDrop={event => {
+          event.preventDefault();
+
+          for (const item of event.dataTransfer.items) {
+            if (item.kind === 'file') {
+              handleFile(item.getAsFile()!);
+            }
+          }
+        }}
+        ref={productPhotoElement}
+        src={productImg}
+        width="9/12"
+      />
+
+      <label
+        className="opacity-50"
+        cursor="pointer"
+        display="block"
+        fontSize="2"
+        htmlFor="file-input"
+        mY="4"
+        textAlign="center"
+      >
+        Nahrať súbor
+      </label>
+      <input
+        display="none"
+        id="file-input"
+        onChange={event => handleFile(event.currentTarget.files?.[0]!)}
+        type="file"
+      />
 
       <div mY="4">
         {productStorage.map(product => (
@@ -94,7 +145,7 @@ function Tstik({
               <div alignItems="center" display="flex" justifyContent="space-between">
                 <div>{product.name}</div>
                 <div className="opacity-50" fontSize="2">
-                  {readMessage?.('NUMBER_OF_OPTIONS_TO_SELECT', [product.options.length])}
+                  {readMessage?.('NUMBER_OF_OPTIONS', [product.options.length])}
                 </div>
               </div>
             ) : (
@@ -237,6 +288,7 @@ function Client() {
             display="flex"
             justifyContent="center"
             onClick={() => addProduct()}
+            p="4"
             textAlign="center"
           >
             {readMessage?.('ADD_PRODUCT_TO_ORDER')}
