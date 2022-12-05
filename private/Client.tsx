@@ -147,7 +147,7 @@ function Tstik({
         </label>
         <input id={`ks-${id}`} onChange={e => on(+e.currentTarget.value)} p="2" type="text" value={ks} width="100" />
       </div>
-      <div alignItems="center" display="flex" justifyContent="space-between">
+      <div alignItems="flex-end" display="flex" justifyContent="space-between">
         <div
           className="deleteProductButton opacity-50"
           cursor="pointer"
@@ -158,7 +158,7 @@ function Tstik({
           {readMessage?.('DELETE_PRODUCT_FROM_ORDER')}
         </div>
         <div textAlign="right" width="6/12">
-          <div fontWeight="600">
+          <div fontSize="4" fontWeight="600">
             {readMessage?.('PRICE_WITHOUT_VAT', [findRight(currentProduct, sumAc, totalks, ks)])}
           </div>
           <div className="opacity-50" fontSize="2">
