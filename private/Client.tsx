@@ -248,14 +248,6 @@ function Client() {
             {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', [sumPrice, sumKs])}
           </div>
         )}
-
-        <div className="line-after" fontSize="8" mY="4">
-          <div>{readMessage?.('TABLE')}</div>
-        </div>
-
-        <div style={{ overflowX: 'auto' }} whiteSpace="nowrap">
-          <Table />
-        </div>
       </div>
     </context.Provider>
   );
