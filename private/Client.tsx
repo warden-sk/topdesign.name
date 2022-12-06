@@ -68,11 +68,7 @@ function Tstik({
   }, [accessories.size, totalks]);
 
   const productImg =
-    currentProduct.name === 'FAN Classic'
-      ? '1. Sedák FAN Classic maska B  390x305mm.png'
-      : currentProduct.name === 'FAN Smart'
-      ? '2. Sedák FAN Smart maska B  390x305mm.png'
-      : '3. Sedák FAN Premium maska B  390x305mm.png';
+    currentProduct.name === 'FAN Classic' ? '1.png' : currentProduct.name === 'FAN Smart' ? '2.png' : '3.png';
 
   const productPhotoElement = React.useRef<HTMLImageElement>(null);
 
