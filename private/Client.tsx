@@ -97,42 +97,28 @@ function Tstik({
       <div className="line-after" fontWeight="600">
         <div>{readMessage?.('PRODUCT')}</div>
       </div>
+      <label cursor="pointer" display="block" fontSize="2" htmlFor="file-input" mY="4" textAlign="center">
+        <img
+          className="product__photo"
+          onDragLeave={e => {
+            e.preventDefault();
+          }}
+          onDragOver={e => {
+            e.preventDefault();
+          }}
+          onDrop={event => {
+            event.preventDefault();
 
-      <img
-        className="product__photo"
-        display="block"
-        mX="auto"
-        mY="4"
-        onDragLeave={e => {
-          e.preventDefault();
-        }}
-        onDragOver={e => {
-          e.preventDefault();
-        }}
-        onDrop={event => {
-          event.preventDefault();
-
-          for (const item of event.dataTransfer.items) {
-            if (item.kind === 'file') {
-              handleFile(item.getAsFile()!);
+            for (const item of event.dataTransfer.items) {
+              if (item.kind === 'file') {
+                handleFile(item.getAsFile()!);
+              }
             }
-          }
-        }}
-        ref={productPhotoElement}
-        src={productImg}
-        width="9/12"
-      />
-
-      <label
-        className="opacity-50"
-        cursor="pointer"
-        display="block"
-        fontSize="2"
-        htmlFor="file-input"
-        mY="4"
-        textAlign="center"
-      >
-        Nahrať súbor
+          }}
+          ref={productPhotoElement}
+          src={productImg}
+          width="9/12"
+        />
       </label>
       <input
         display="none"
@@ -140,7 +126,6 @@ function Tstik({
         onChange={event => handleFile(event.currentTarget.files?.[0]!)}
         type="file"
       />
-
       <div mY="4">
         {productStorage.map(product => (
           <div
@@ -163,7 +148,6 @@ function Tstik({
           </div>
         ))}
       </div>
-
       {currentProduct.options.length > 0 && (
         <>
           <div className="line-after" fontWeight="600">
@@ -200,7 +184,6 @@ function Tstik({
           </div>
         </>
       )}
-
       <div mY="4" spaceY="4">
         <label className="line-after" cursor="pointer" fontWeight="600" htmlFor={`ks-${id}`}>
           <div>{readMessage?.('NUMBER_OF_PIECES', [])}</div>
