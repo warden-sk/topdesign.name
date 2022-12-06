@@ -80,7 +80,19 @@ function Tstik({
     if (/^image\//.test(file.type)) {
       const urlFromFile = URL.createObjectURL(file);
 
-      productPhotoElement.current && (productPhotoElement.current.style.backgroundImage = `url(${urlFromFile})`);
+      const photo = new HTMLImageElement();
+
+      photo.addEventListener('load', e => {
+        const { height, width } = e.currentTarget;
+
+        if (height === 9150 && width === 11700) {
+          productPhotoElement.current && (productPhotoElement.current.style.backgroundImage = `url(${urlFromFile})`);
+        } else {
+          alert('Fotografia nemá výšku 305 mm a šírku 390 mm.');
+        }
+      });
+
+      photo.src = urlFromFile;
     }
   }
 
@@ -138,6 +150,7 @@ function Tstik({
           <div
             className={['product__name', { product__name_active: product.name === currentProduct?.name }]}
             cursor="pointer"
+            key={product.name}
             onClick={() => updateCurrentProduct(product)}
             p="2"
           >
@@ -264,6 +277,7 @@ function Client() {
           {[...products].map(([i]) => (
             <Tstik
               id={i}
+              key={i}
               onDelete={() => {
                 deleteProduct(i);
               }}
