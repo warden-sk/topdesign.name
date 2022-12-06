@@ -80,7 +80,7 @@ function Tstik({
     if (/^image\//.test(file.type)) {
       const urlFromFile = URL.createObjectURL(file);
 
-      const photo = new HTMLImageElement();
+      const photo = new Image();
 
       photo.addEventListener('load', e => {
         const { height, width } = e.currentTarget;
