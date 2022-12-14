@@ -11,43 +11,37 @@ let I = 0;
 function Order() {
   const { readMessage } = React.useContext(context);
 
-  const [products, updateProducts] = React.useState<[number, number, number][]>([]);
-
-  const sumPrice: number = [...products].reduce((partialSum, a) => partialSum + a[1], 0);
-  const sumKs: number = [...products].reduce((partialSum, a) => partialSum + a[2], 0);
+  const [products, updateProducts] = React.useState<[id: number, price: number, pcs: number][]>([]);
 
   function addProduct() {
     updateProducts(products => [...products, [I++, 0, 0]]);
   }
 
-  function deleteProduct(i: number) {
-    console.log('deleteProduct', i);
-    updateProducts(products => products.filter(([j]) => j !== i));
+  function deleteProduct(id: number) {
+    updateProducts(products => products.filter(product => product[0] !== id));
   }
+
+  function updateProduct(id: number, $: [price: number, pcs: number]) {
+    updateProducts(products => {
+      return products.map(product => {
+        if (product[0] === id) {
+          return [id, ...$];
+        }
+
+        return product;
+      });
+    });
+  }
+
+  /* (1) */ const order_price: number = [...products].reduce(($, [, price]) => $ + price, 0);
+  /* (2) */ const order_pcs: number = [...products].reduce(($, [, , pcs]) => $ + pcs, 0);
 
   return (
     <div className="test" display="grid" gap="4" gridTemplateColumns={['1', { '###': '4' }]}>
       <div className="test__left" display="grid" gridTemplateColumns={['1', { '###': '2', '####': '3' }]} gap="4">
-        {[...products].map(([i]) => (
-          <div key={i}>
-            <Tstik
-              id={i}
-              onDelete={() => {
-                deleteProduct(i);
-              }}
-              onPrice={price => {
-                updateProducts(products => {
-                  return products.map(product => {
-                    if (product[0] === i) {
-                      return [i, ...price];
-                    }
-
-                    return product;
-                  });
-                });
-              }}
-              totalks={sumKs}
-            />
+        {[...products].map(([id]) => (
+          <div key={id}>
+            <Tstik id={id} onDelete={() => deleteProduct(id)} onPrice={$ => updateProduct(id, $)} totalks={order_pcs} />
           </div>
         ))}
         <div
@@ -62,10 +56,10 @@ function Order() {
           {readMessage?.('ADD_PRODUCT_TO_ORDER')}
         </div>
       </div>
-      {sumPrice > 0 && (
+      {order_price > 0 && (
         <div className="test__right" display="flex" flexDirection="column" p="4">
           <div className="test__right__price" fontWeight="600" mT="auto" p="2" textAlign="center">
-            {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', sumPrice, sumKs)}
+            {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', order_price, order_pcs)}
           </div>
         </div>
       )}
