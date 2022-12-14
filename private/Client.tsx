@@ -37,7 +37,7 @@ export function Tstik({
   onDelete,
   onPrice,
 }: {
-  id: string;
+  id: number;
   totalks: number;
   onDelete: () => void;
   onPrice: (price: [number, number]) => void;
