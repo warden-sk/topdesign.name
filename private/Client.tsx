@@ -52,6 +52,8 @@ function Tstik({
   const sumAc = [...accessories].reduce((partialSum, a) => partialSum + a.price, 0);
 
   function on(ks: number) {
+    ks = ks <= 5000 ? ks : 5000;
+
     updateKs(ks);
 
     onPrice([findRight(currentProduct, sumAc, totalks, ks), ks]);
@@ -97,7 +99,7 @@ function Tstik({
       <div className="line-after" fontWeight="600">
         <div>{readMessage?.('PRODUCT')}</div>
       </div>
-      <label cursor="pointer" display="block" fontSize="2" htmlFor="file-input" mY="4" textAlign="center">
+      <label cursor="pointer" display="block" fontSize="2" htmlFor={`file-${id}`} mY="4" textAlign="center">
         <img
           className="product__photo"
           onDragLeave={e => {
@@ -122,7 +124,7 @@ function Tstik({
       </label>
       <input
         display="none"
-        id="file-input"
+        id={`file-${id}`}
         onChange={event => handleFile(event.currentTarget.files?.[0]!)}
         type="file"
       />
