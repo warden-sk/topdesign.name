@@ -9,6 +9,7 @@ import React from 'react';
 import context from './context';
 import getMessage from './messages';
 import productStorage from './productStorage';
+import Order from './components/Order';
 
 function findRight(product: Product, sumAc: number, totalks: number, ks: number): number {
   const i = product.modifiers.findIndex(($$, j) => {
@@ -30,7 +31,7 @@ function findRight(product: Product, sumAc: number, totalks: number, ks: number)
   return 0;
 }
 
-function Tstik({
+export function Tstik({
   id,
   totalks,
   onDelete,
@@ -217,24 +218,6 @@ function Tstik({
 
 function Client() {
   const [language, updateLanguage] = React.useState<'en' | 'sk'>('sk');
-  const [products, updateProducts] = React.useState<[string, number, number][]>([]);
-
-  const sumPrice: number = [...products].reduce((partialSum, a) => partialSum + a[1], 0);
-  const sumKs: number = [...products].reduce((partialSum, a) => partialSum + a[2], 0);
-
-  function addProduct() {
-    updateProducts(products => {
-      return [...products, [window.crypto.randomUUID(), 0, 0]];
-    });
-  }
-
-  function deleteProduct(i: string) {
-    updateProducts(products => {
-      const f = [...products].filter(([j]) => j !== i);
-
-      return f;
-    });
-  }
 
   const readMessage = getMessage(language);
 
@@ -254,50 +237,7 @@ function Client() {
           <div>{readMessage?.('ORDER')}</div>
         </div>
 
-        <div className="test" display="grid" gap="4" gridTemplateColumns={['1', { '###': '4' }]}>
-          <div className="test__left" display="grid" gridTemplateColumns={['1', { '###': '2', '####': '3' }]} gap="4">
-            {[...products].map(([i]) => (
-              <Tstik
-                id={i}
-                key={i}
-                onDelete={() => {
-                  deleteProduct(i);
-                }}
-                onPrice={price => {
-                  updateProducts(products => {
-                    return products.map(product => {
-                      if (product[0] === i) {
-                        return [i, ...price];
-                      }
-
-                      return product;
-                    });
-                  });
-                }}
-                totalks={sumKs}
-              />
-            ))}
-            <div
-              alignItems="center"
-              className="addProductButton"
-              cursor="pointer"
-              display="flex"
-              justifyContent="center"
-              onClick={() => addProduct()}
-              p="4"
-              textAlign="center"
-            >
-              {readMessage?.('ADD_PRODUCT_TO_ORDER')}
-            </div>
-          </div>
-          {sumPrice > 0 && (
-            <div className="test__right" display="flex" flexDirection="column" p="4">
-              <div className="test__right__price" fontWeight="600" mT="auto" p="2" textAlign="center">
-                {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', sumPrice, sumKs)}
-              </div>
-            </div>
-          )}
-        </div>
+        <Order />
       </div>
     </context.Provider>
   );

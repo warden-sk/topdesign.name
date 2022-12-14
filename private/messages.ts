@@ -5,6 +5,7 @@
 import plural from './plural';
 
 export interface Messages {
+  [key: string]: string | ((...$: any) => any);
   ADD_PRODUCT_TO_ORDER: string;
   DELETE_PRODUCT_FROM_ORDER: string;
   NUMBER_OF_OPTIONS: (options: number) => string;
@@ -51,7 +52,7 @@ const sk: Messages = {
   WITHOUT_VAT: 'bez\u00A0DPH',
 };
 
-export type L<TT> = TT extends (...args: infer P) => any ? P : [];
+export type L<TT> = TT extends (...args: infer P) => any ? P : any[];
 
 export const availableLanguages = { en, sk };
 
