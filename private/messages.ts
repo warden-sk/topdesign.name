@@ -32,7 +32,7 @@ const en: Messages = {
     `${en.PRICE_WITHOUT_VAT(price)} for\u00A0${plural(pieces, ['piece', 'pieces', 'pieces'])}`,
   PRODUCT: 'Product',
   TABLE: 'Table',
-  WITHOUT_VAT: 'without VAT',
+  WITHOUT_VAT: 'without\u00A0VAT',
 };
 
 const sk: Messages = {
@@ -48,7 +48,7 @@ const sk: Messages = {
     `${sk.PRICE_WITHOUT_VAT(price)} za\u00A0${plural(pieces, ['kusu', 'kusov', 'kusov'])}`,
   PRODUCT: 'Produkt',
   TABLE: 'Tabuľka',
-  WITHOUT_VAT: 'bez DPH',
+  WITHOUT_VAT: 'bez\u00A0DPH',
 };
 
 export type L<TT> = TT extends (...args: infer P) => any ? P : never;

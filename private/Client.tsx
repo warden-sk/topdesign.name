@@ -119,7 +119,7 @@ function Tstik({
           }}
           ref={productPhotoElement}
           src={productImg}
-          width="9/12"
+          width="100"
         />
       </label>
       <input
@@ -192,23 +192,24 @@ function Tstik({
         </label>
         <input id={`ks-${id}`} onChange={e => on(+e.currentTarget.value)} p="2" type="text" value={ks} width="100" />
       </div>
-      <div alignItems="flex-end" display="flex" justifyContent="space-between">
-        <div
-          className="deleteProductButton opacity-50"
-          cursor="pointer"
-          fontSize="2"
-          onClick={() => onDelete()}
-          width="6/12"
-        >
-          {readMessage?.('DELETE_PRODUCT_FROM_ORDER')}
-        </div>
-        <div textAlign="right" width="6/12">
+
+      <div spaceY="4">
+        <div textAlign="right">
           <div fontSize="4" fontWeight="600">
             {readMessage?.('PRICE_WITHOUT_VAT', [findRight(currentProduct, sumAc, totalks, ks)])}
           </div>
           <div className="opacity-50" fontSize="2">
             {readMessage?.('PRICE_FROM_PIECES', [totalks])}
           </div>
+        </div>
+        <div
+          className="deleteProductButton opacity-50"
+          cursor="pointer"
+          fontSize="2"
+          onClick={() => onDelete()}
+          textAlign="center"
+        >
+          {readMessage?.('DELETE_PRODUCT_FROM_ORDER')}
         </div>
       </div>
     </div>
@@ -240,8 +241,8 @@ function Client() {
 
   return (
     <context.Provider value={{ language, readMessage, updateLanguage }}>
-      <div className="container" mX="auto" p="4">
-        <div mY="4">
+      <div className="container container_first" display="flex" flexDirection="column" mX="auto" p="4">
+        <div>
           <a display="block" href="#" onClick={() => updateLanguage('en')}>
             English language
           </a>
@@ -250,51 +251,59 @@ function Client() {
           </a>
         </div>
 
-        <div className="line-after" fontSize="8" mY="4">
+        <div className="line-after" fontSize="8" mY="8">
           <div>{readMessage?.('ORDER')}</div>
         </div>
 
-        <div display="grid" gridTemplateColumns={['1', { '##': '2', '###': '3' }]} gap="4">
-          {[...products].map(([i]) => (
-            <Tstik
-              id={i}
-              key={i}
-              onDelete={() => {
-                deleteProduct(i);
-              }}
-              onPrice={price => {
-                updateProducts(products => {
-                  return products.map(product => {
-                    if (product[0] === i) {
-                      return [i, ...price];
-                    }
+        <div className="test" display="grid" gap="4" gridTemplateColumns={['1', { '###': '4' }]}>
+          <div className="test__left" display="grid" gridTemplateColumns={['1', { '###': '2', '####': '3' }]} gap="4">
+            {[...products].map(([i]) => (
+              <Tstik
+                id={i}
+                key={i}
+                onDelete={() => {
+                  deleteProduct(i);
+                }}
+                onPrice={price => {
+                  updateProducts(products => {
+                    return products.map(product => {
+                      if (product[0] === i) {
+                        return [i, ...price];
+                      }
 
-                    return product;
+                      return product;
+                    });
                   });
-                });
-              }}
-              totalks={sumKs}
-            />
-          ))}
-          <div
-            alignItems="center"
-            className="addProductButton"
-            cursor="pointer"
-            display="flex"
-            justifyContent="center"
-            onClick={() => addProduct()}
-            p="4"
-            textAlign="center"
-          >
-            {readMessage?.('ADD_PRODUCT_TO_ORDER')}
+                }}
+                totalks={sumKs}
+              />
+            ))}
+            <div
+              alignItems="center"
+              className="addProductButton"
+              cursor="pointer"
+              display="flex"
+              justifyContent="center"
+              onClick={() => addProduct()}
+              p="4"
+              textAlign="center"
+            >
+              {readMessage?.('ADD_PRODUCT_TO_ORDER')}
+            </div>
           </div>
+          {sumPrice > 0 && (
+            <div className="test__right" display="flex" flexDirection="column" p="4">
+              <div>
+                {products.map((product, i) => (
+                  <div>{[i + 1, product[1].toFixed(2), product[2]].join(' \u2014 ')}</div>
+                ))}
+              </div>
+              <div className="test__right__price" fontWeight="600" mT="auto" p="2" textAlign="center">
+                {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', [sumPrice, sumKs])}
+              </div>
+            </div>
+          )}
         </div>
-
-        {sumPrice > 0 && (
-          <div className="order__price" fontSize="4" fontWeight="600" mY="4" p="2" textAlign="center">
-            {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', [sumPrice, sumKs])}
-          </div>
-        )}
       </div>
     </context.Provider>
   );

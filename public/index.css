@@ -39,11 +39,6 @@ textarea {
 .deleteProductButton:hover {
   text-decoration: underline;
 }
-.order__price {
-  background-color: hsl(0, 0%, 20%);
-  border: var(--border-width) solid hsl(0, 0%, 40%);
-  border-radius: var(--border-radius);
-}
 .product {
   background-color: hsl(0, 0%, 20%);
   border: var(--border-width) solid hsl(0, 0%, 40%);
@@ -80,4 +75,30 @@ textarea {
 /**/
 .opacity-50 {
   opacity: 0.5;
+}
+/**/
+.test {
+  overflow-y: auto;
+}
+.test__left {
+  overflow-y: auto;
+}
+@media (min-width: 64rem) {
+  .test__left {
+    grid-column: span 3 / span 3;
+  }
+}
+.test__right {
+  background-color: hsl(0, 0%, 20%);
+  border: var(--border-width) solid hsl(0, 0%, 40%);
+  border-radius: var(--border-radius);
+}
+.test__right__price {
+  background-color: hsl(0, 0%, 30%);
+  border: var(--border-width) solid hsl(0, 0%, 40%);
+  border-radius: var(--border-radius);
+}
+/**/
+.container_first {
+  height: 100vh;
 }
