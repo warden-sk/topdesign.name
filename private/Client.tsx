@@ -10,6 +10,7 @@ import context from './context';
 import getMessage from './messages';
 import productStorage from './productStorage';
 import Order from './components/Order';
+import Table from './Table';
 
 function findRight(product: Product, sumAc: number, totalks: number, ks: number): number {
   const i = product.modifiers.findIndex(($$, j) => {
@@ -223,7 +224,7 @@ function Client() {
 
   return (
     <context.Provider value={{ language, readMessage, updateLanguage }}>
-      <div className="container container_first" display="flex" flexDirection="column" mX="auto" p="4">
+      <div className="container" display="flex" flexDirection="column" mX="auto" p="4">
         <div>
           <a display="block" href="#" onClick={() => updateLanguage('en')}>
             English language
@@ -232,6 +233,12 @@ function Client() {
             Slovenský jazyk
           </a>
         </div>
+
+        <div className="line-after" fontSize="8" mY="8">
+          <div>{readMessage?.('TABLE')}</div>
+        </div>
+
+        <Table />
 
         <div className="line-after" fontSize="8" mY="8">
           <div>{readMessage?.('ORDER')}</div>

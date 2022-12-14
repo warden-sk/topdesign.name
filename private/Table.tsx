@@ -25,7 +25,7 @@ function Table() {
                       <td p="2">{r - 100} %</td>
                     </tr>
                     <tr>
-                      <td p="2">{readMessage?.('NUMBER_OF_PIECES', [l])}</td>
+                      <td p="2">{readMessage?.('NUMBER_OF_PIECES', l)}</td>
                     </tr>
                     <tr>
                       <td fontWeight="600" p="2">

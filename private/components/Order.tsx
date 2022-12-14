@@ -36,6 +36,31 @@ function Order() {
   /* (1) */ const order_price: number = [...products].reduce(($, [, price]) => $ + price, 0);
   /* (2) */ const order_pcs: number = [...products].reduce(($, [, , pcs]) => $ + pcs, 0);
 
+  React.useEffect(() => {
+    function update() {
+      const order = document.querySelector<HTMLDivElement>('.test');
+      const orderLeft = document.querySelector<HTMLDivElement>('.test__left');
+
+      if (order && orderLeft) {
+        /* (1) */
+        const orderProducts = order.querySelectorAll<HTMLDivElement>('.product');
+
+        const heights = [...orderProducts].map(orderProduct => {
+          const { height } = orderProduct.getBoundingClientRect();
+
+          return height;
+        });
+
+        order.style.height = `${Math.max(...heights)}px`;
+
+        /* (2) */
+        orderLeft.scrollTop = orderLeft.scrollHeight;
+      }
+    }
+
+    update();
+  }, [products]);
+
   return (
     <div className="test" display="grid" gap="4" gridTemplateColumns={['1', { '###': '4' }]}>
       <div className="test__left" display="grid" gridTemplateColumns={['1', { '###': '2', '####': '3' }]} gap="4">
