@@ -2,12 +2,12 @@
  * Copyright 2022 Marek Kobida
  */
 
-import type { L, Messages } from './messages';
+import type { L, Messages, availableLanguages } from './messages';
 import { createContext } from 'react';
 
 interface Context {
-  language: 'en' | 'sk';
-  readMessage: <K extends keyof Messages>(key: K, $?: L<Messages[K]>) => string;
+  language: keyof typeof availableLanguages;
+  readMessage: <K extends keyof Messages>(key: K, ...$: L<Messages[K]>) => string;
   updateLanguage: (language: Context['language']) => void;
 }
 

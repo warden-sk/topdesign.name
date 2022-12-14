@@ -16,7 +16,7 @@ export interface Product {
 
 //----------------------------------------------------------------------------------------------------------------------
 
-const firstCategoryModifiers: [number, number][] = [
+const modifiers: [number, number][] = [
   [50, 140],
   [100, 125],
   [200, 118],
@@ -32,19 +32,19 @@ const firstCategoryModifiers: [number, number][] = [
 
 const productStorage: Product[] = [
   {
-    modifiers: firstCategoryModifiers,
+    modifiers,
     name: 'FAN Classic',
     options: [],
     price: 2.8,
   },
   {
-    modifiers: firstCategoryModifiers,
+    modifiers,
     name: 'FAN Smart',
     options: [],
     price: 2.95,
   },
   {
-    modifiers: firstCategoryModifiers,
+    modifiers,
     name: 'FAN Premium',
     options: [
       {

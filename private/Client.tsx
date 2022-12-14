@@ -6,7 +6,6 @@ import './Client.css';
 
 import type { Product, ProductOption } from './productStorage';
 import React from 'react';
-import Table from './Table';
 import context from './context';
 import getMessage from './messages';
 import productStorage from './productStorage';
@@ -141,7 +140,7 @@ function Tstik({
               <div alignItems="center" display="flex" justifyContent="space-between">
                 <div>{product.name}</div>
                 <div className="opacity-50" fontSize="2">
-                  {readMessage?.('NUMBER_OF_OPTIONS', [product.options.length])}
+                  {readMessage?.('NUMBER_OF_OPTIONS', product.options.length)}
                 </div>
               </div>
             ) : (
@@ -178,7 +177,7 @@ function Tstik({
                 >
                   <div>{option.name}</div>
                   <div className="opacity-50" fontSize="2">
-                    {readMessage?.('PRICE_WITHOUT_VAT', [option.price])}
+                    {readMessage?.('PRICE_WITHOUT_VAT', option.price)}
                   </div>
                 </div>
               );
@@ -188,7 +187,7 @@ function Tstik({
       )}
       <div mY="4" spaceY="4">
         <label className="line-after" cursor="pointer" fontWeight="600" htmlFor={`ks-${id}`}>
-          <div>{readMessage?.('NUMBER_OF_PIECES', [])}</div>
+          <div>{readMessage?.('NUMBER_OF_PIECES')}</div>
         </label>
         <input id={`ks-${id}`} onChange={e => on(+e.currentTarget.value)} p="2" type="text" value={ks} width="100" />
       </div>
@@ -196,10 +195,10 @@ function Tstik({
       <div spaceY="4">
         <div textAlign="right">
           <div fontSize="4" fontWeight="600">
-            {readMessage?.('PRICE_WITHOUT_VAT', [findRight(currentProduct, sumAc, totalks, ks)])}
+            {readMessage?.('PRICE_WITHOUT_VAT', findRight(currentProduct, sumAc, totalks, ks))}
           </div>
           <div className="opacity-50" fontSize="2">
-            {readMessage?.('PRICE_FROM_PIECES', [totalks])}
+            {readMessage?.('PRICE_FROM_PIECES', totalks)}
           </div>
         </div>
         <div
@@ -293,13 +292,8 @@ function Client() {
           </div>
           {sumPrice > 0 && (
             <div className="test__right" display="flex" flexDirection="column" p="4">
-              <div>
-                {products.map((product, i) => (
-                  <div>{[i + 1, product[1].toFixed(2), product[2]].join(' \u2014 ')}</div>
-                ))}
-              </div>
               <div className="test__right__price" fontWeight="600" mT="auto" p="2" textAlign="center">
-                {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', [sumPrice, sumKs])}
+                {readMessage?.('PRICE_WITHOUT_VAT_FOR_PIECES', sumPrice, sumKs)}
               </div>
             </div>
           )}

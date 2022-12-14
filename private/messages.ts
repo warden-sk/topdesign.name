@@ -7,7 +7,7 @@ import plural from './plural';
 export interface Messages {
   ADD_PRODUCT_TO_ORDER: string;
   DELETE_PRODUCT_FROM_ORDER: string;
-  NUMBER_OF_OPTIONS: (numberOfOptions: number) => string;
+  NUMBER_OF_OPTIONS: (options: number) => string;
   NUMBER_OF_PIECES: (pieces?: number) => string;
   OPTIONS: string;
   ORDER: string;
@@ -22,7 +22,7 @@ export interface Messages {
 const en: Messages = {
   ADD_PRODUCT_TO_ORDER: 'Add product to\u00A0order',
   DELETE_PRODUCT_FROM_ORDER: 'Delete product from\u00A0order',
-  NUMBER_OF_OPTIONS: numberOfOptions => `${plural(numberOfOptions, ['option', 'options', 'options'])}`,
+  NUMBER_OF_OPTIONS: options => `${plural(options, ['option', 'options', 'options'])}`,
   NUMBER_OF_PIECES: pieces => (pieces ? `${plural(pieces, ['piece', 'pieces', 'pieces'])}` : 'Number of pieces'),
   OPTIONS: 'Options',
   ORDER: 'Order',
@@ -38,7 +38,7 @@ const en: Messages = {
 const sk: Messages = {
   ADD_PRODUCT_TO_ORDER: 'Pridať produkt do\u00A0objednávky',
   DELETE_PRODUCT_FROM_ORDER: 'Odstrániť produkt z\u00A0objednávky',
-  NUMBER_OF_OPTIONS: numberOfOptions => `${plural(numberOfOptions, ['možnosť', 'možnosti', 'možností'])}`,
+  NUMBER_OF_OPTIONS: options => `${plural(options, ['možnosť', 'možnosti', 'možností'])}`,
   NUMBER_OF_PIECES: pieces => (pieces ? `${plural(pieces, ['kus', 'kusy', 'kusov'])}` : 'Počet kusov'),
   OPTIONS: 'Možnosti',
   ORDER: 'Objednávka',
@@ -51,20 +51,19 @@ const sk: Messages = {
   WITHOUT_VAT: 'bez\u00A0DPH',
 };
 
-export type L<TT> = TT extends (...args: infer P) => any ? P : never;
+export type L<TT> = TT extends (...args: infer P) => any ? P : [];
 
-const languages = { en, sk };
+export const availableLanguages = { en, sk };
 
-function getMessage(language: keyof typeof languages) {
-  return <K extends keyof Messages>(key: K, args?: L<Messages[K]>) => {
-    const $ = languages[language][key];
+function getMessage(language: keyof typeof availableLanguages) {
+  return <K extends keyof Messages>(key: K, ...$: L<Messages[K]>) => {
+    const $$ = availableLanguages[language][key];
 
-    if (typeof $ === 'string') {
-      return $;
+    if (typeof $$ === 'string') {
+      return $$;
     }
 
-    // @ts-ignore
-    return $(...args);
+    return $$(...$);
   };
 }
 
